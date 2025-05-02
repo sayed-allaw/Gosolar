@@ -1,0 +1,105 @@
+.sectors-section {
+  padding: 4rem 2rem;
+  background-color: #fff; /* White background */
+  text-align: center;
+}
+
+.section-header {
+  margin-bottom: 3rem;
+}
+
+.section-header h2 {
+  font-size: 2.2rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #343a40;
+}
+
+.section-header p {
+  color: #495057;
+  max-width: 750px;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 1.05rem;
+}
+
+.sectors-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem; /* Adjusted gap */
+  max-width: 1140px;
+  margin: 0 auto;
+}
+
+.sector-card {
+  padding: 1.5rem 1.5rem 2rem; /* تعديل البادنج ليكون متساوي حول جميع الجوانب */
+  background-color: #ffffff;
+  border-radius: 0.25rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  display: flex; /* استخدام فلكس بوكس للتنسيق */
+  flex-direction: column; /* ترتيب العناصر عموديًا */
+  align-items: center; /* توسيط العناصر أفقيًا */
+  text-align: center;
+  overflow: hidden; /* إخفاء أي محتوى يتجاوز الحدود */
+}
+
+.sector-card-image {
+  width: 100px; /* عرض ثابت للصورة */
+  height: 100px; /* ارتفاع ثابت للصورة */
+  object-fit: cover;
+  margin: 0 auto 1.5rem; /* هامش أسفل الصورة للفصل بينها وبين النص */
+}
+
+.sector-card h4 {
+  font-size: 1.4rem; /* حجم الخط */
+  text-transform: capitalize;
+  margin-top: 0; /* إزالة الهامش العلوي */
+  margin-bottom: 0.75rem; /* مساحة تحت العنوان */
+  font-weight: 600;
+  color: #004a99; /* لون أزرق غامق للعنوان */
+  padding: 0; /* إزالة البادنج */
+  width: 100%; /* عرض كامل */
+}
+
+.sector-card p {
+  font-size: 1rem; /* حجم الخط */
+  color: #495057;
+  margin-bottom: 1.5rem; /* مساحة تحت الفقرة */
+  padding: 0; /* إزالة البادنج */
+  width: 100%; /* عرض كامل */
+}
+
+.sector-card .btn-sector {
+  padding: 0.7rem 1.4rem; /* بادنج الزر */
+  border: 1px solid #298204; /* حدود الزر */
+  color: #298204; /* لون نص الزر */
+  background-color: transparent;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  border-radius: 0.25rem;
+  transition: all 0.2s ease-in-out;
+  text-decoration: none; /* إزالة التسطير من الروابط */
+  display: inline-block; /* جعل الرابط كزر */
+}
+
+.sector-card .btn-sector:hover {
+  background-color: #298204; /* لون خلفية الزر عند التحويم */
+  color: #fff;
+}
+
+/* --- Responsive Sectors Section --- */
+@media (max-width: 768px) {
+  .sectors-grid {
+    grid-template-columns: 1fr; /* رص البطاقات */
+    gap: 1.5rem;
+  }
+  .sectors-section {
+    padding: 3rem 1rem;
+  }
+
+  .section-header h2 {
+    font-size: 1.8rem;
+  }
+}

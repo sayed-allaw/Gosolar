@@ -6,9 +6,12 @@ import {
   Scripts,
   ScrollRestoration,
 } from "react-router";
-
+import { useEffect } from "react";
 import type { Route } from "./+types/root";
 import "./app.css";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+import { initEmailJS } from "./utils/emailjs";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -19,11 +22,25 @@ export const links: Route.LinksFunction = () => [
   },
   {
     rel: "stylesheet",
-    href: "https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap",
+    href: "https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap",
+  },
+  {
+    rel: "icon",
+    href: "/favicon.png",
+    type: "image/x-icon",
+  },
+  {
+    rel: "shortcut icon",
+    href: "/favicon.png",
+    type: "image/x-icon",
   },
 ];
 
 export function Layout({ children }: { children: React.ReactNode }) {
+  useEffect(() => {
+    initEmailJS();
+  }, []);
+
   return (
     <html lang="en">
       <head>
@@ -33,7 +50,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
+        <Header />
         {children}
+        <Footer />
         <ScrollRestoration />
         <Scripts />
       </body>

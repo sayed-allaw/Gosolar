@@ -1,0 +1,315 @@
+.hero-section {
+  position: relative;
+  padding: 10rem 2rem;
+  text-align: center;
+  color: #fff;
+  min-height: 85vh;
+  overflow: hidden;
+}
+
+/* تنسيق الخلفيات مع تأثيرات التبديل */
+.hero-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  transition: opacity 1.5s ease-in-out, transform 1.5s ease-in-out;
+}
+
+.current-bg {
+  opacity: 1;
+  z-index: 0;
+}
+
+.next-bg {
+  opacity: 0;
+  z-index: 0;
+  transform: scale(1.05);
+}
+
+.current-bg.fade-out {
+  opacity: 0;
+  transform: scale(1);
+}
+
+.next-bg.fade-in {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Overlay to darken the background image for text readability */
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.7),
+    rgba(0, 0, 0, 0.6)
+  );
+  z-index: 1;
+}
+
+.hero-content {
+  max-width: 850px;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  z-index: 2;
+  overflow: hidden;
+}
+
+.animated-title {
+  font-size: 4rem;
+  font-weight: 800;
+  margin-bottom: 2rem;
+  line-height: 1.2;
+  text-shadow: 2px 2px 15px rgba(0, 0, 0, 0.4);
+  animation: slideInFromRight 1.2s ease-out;
+  transform-origin: right center;
+}
+
+.highlight {
+  color: #298204; /* تغيير اللون إلى الأخضر المطلوب */
+  font-weight: 900;
+  position: relative;
+  display: inline-block;
+}
+
+.highlight::after {
+  content: none; /* إزالة التسطير تحت الكلمات */
+}
+
+.hero-content:hover .highlight::after {
+  transform: none;
+}
+
+.hero-description {
+  margin-bottom: 3.5rem;
+  animation: slideInFromLeft 1.2s ease-out 0.3s both;
+}
+
+.hero-description p {
+  font-size: 1.3rem;
+  line-height: 1.7;
+  margin-bottom: 1rem;
+  color: #f5f5f5;
+  text-shadow: 1px 1px 8px rgba(0, 0, 0, 0.5);
+}
+
+.hero-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  animation: slideUpFade 1.5s ease-out 0.5s both;
+}
+
+.hero-buttons .btn {
+  padding: 1rem 2.2rem;
+  font-size: 1.15rem;
+  border-radius: 50px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary {
+  background: #298204; /* تغيير اللون للأخضر المطلوب */
+  color: #fff;
+}
+
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.btn-primary::before,
+.btn-secondary::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: left 0.7s ease;
+}
+
+.btn-primary:hover,
+.btn-secondary:hover {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 7px 20px rgba(0, 0, 0, 0.3);
+}
+
+.btn-primary:hover {
+  background: #339c0d; /* تغيير لون التحويم للأخضر */
+}
+
+.btn-primary:hover::before,
+.btn-secondary:hover::before {
+  left: 100%;
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.btn-text {
+  margin-right: 0.8rem;
+  position: relative;
+  z-index: 2;
+}
+
+.btn-icon {
+  font-size: 1.3rem;
+  transition: transform 0.3s ease;
+  position: relative;
+  z-index: 2;
+}
+
+.btn:hover .btn-icon {
+  transform: translateX(5px);
+}
+
+/* مؤشرات الخلفية */
+.bg-indicators {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 3rem;
+  animation: fadeIn 1.5s ease-out 0.7s both;
+}
+
+.indicator {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.indicator.active {
+  background-color: #298204; /* لون المؤشر النشط إلى أخضر */
+  transform: scale(1.3);
+}
+
+.indicator:hover {
+  background-color: #298204; /* تغيير لون التحويم إلى أخضر */
+}
+
+/* تأثيرات الحركة الجانبية */
+@keyframes slideInFromRight {
+  from {
+    opacity: 0;
+    transform: translateX(80px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInFromLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-80px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideUpFade {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+  .animated-title {
+    font-size: 3.5rem;
+  }
+
+  .hero-description p {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-section {
+    padding: 8rem 1.5rem;
+    min-height: 80vh;
+  }
+
+  .animated-title {
+    font-size: 2.8rem;
+  }
+
+  .hero-description p {
+    font-size: 1.1rem;
+  }
+
+  .hero-buttons {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .hero-buttons .btn {
+    padding: 0.9rem 1.8rem;
+    width: 100%;
+    max-width: 280px;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 576px) {
+  .hero-section {
+    padding: 6rem 1rem;
+  }
+
+  .animated-title {
+    font-size: 2.2rem;
+  }
+
+  .hero-description p {
+    font-size: 1rem;
+  }
+}

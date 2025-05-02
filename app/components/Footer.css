@@ -1,0 +1,429 @@
+.footer {
+  background-color: #0a1525; /* لون خلفية داكن أكثر عمق */
+  color: #f8f9fa;
+  padding-top: 0;
+  position: relative;
+  overflow: hidden;
+  direction: ltr;
+  text-align: left;
+}
+
+.footer-wave {
+  width: 100%;
+  position: relative;
+  margin-bottom: -10px;
+}
+
+.footer-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 4rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 3rem 2rem;
+  position: relative;
+}
+
+/* Footer Logo */
+.footer-logo {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.footer-logo-img {
+  max-width: 180px;
+  height: auto;
+}
+
+/* Contact Section */
+.contact-title,
+.form-title {
+  font-size: 1.3rem;
+  margin-bottom: 1.5rem;
+  position: relative;
+  display: inline-block;
+  padding-bottom: 10px;
+  color: #fff;
+  letter-spacing: 0.5px;
+  font-weight: 500;
+}
+
+.contact-title:after,
+.form-title:after {
+  content: "";
+  position: absolute;
+  width: 50%;
+  height: 3px;
+  background: linear-gradient(90deg, #298204, rgba(41, 130, 4, 0.2));
+  bottom: 0;
+  left: 0;
+}
+
+.social-title {
+  font-size: 1.1rem;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  color: #298204;
+  letter-spacing: 0.5px;
+}
+
+/* Contact Items */
+.contact-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+  transition: all 0.3s ease;
+}
+
+.contact-item:hover {
+  transform: translateX(5px);
+}
+
+.contact-icon {
+  width: 18px;
+  height: 18px;
+  margin-right: 1rem;
+  color: #298204;
+}
+
+.contact-item p {
+  margin: 0;
+  font-size: 0.95rem;
+  color: #d1d5db;
+}
+
+/* Social Media Links */
+.social-links {
+  display: flex;
+  gap: 1rem;
+}
+
+.social-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background-color: #2b3a4f;
+  color: #fff;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+}
+
+.social-link:hover {
+  background-color: #298204;
+  color: #fff;
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(41, 130, 4, 0.2);
+}
+
+/* Form Styling */
+.footer-form form {
+  display: flex;
+  flex-direction: column;
+  background-color: rgba(43, 58, 79, 0.3);
+  padding: 2rem;
+  border-radius: 10px;
+  backdrop-filter: blur(5px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.form-group {
+  margin-bottom: 1.2rem;
+  position: relative;
+}
+
+.footer-form input,
+.footer-form textarea {
+  width: 100%;
+  padding: 0.9rem 1rem;
+  border: 1px solid #374151;
+  border-radius: 6px;
+  background-color: rgba(43, 58, 79, 0.6);
+  color: white;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+}
+
+.footer-form input:focus,
+.footer-form textarea:focus {
+  outline: none;
+  border-color: #298204;
+  box-shadow: 0 0 0 2px rgba(41, 130, 4, 0.2);
+  background-color: rgba(43, 58, 79, 0.8);
+}
+
+.footer-form input::placeholder,
+.footer-form textarea::placeholder {
+  color: #9ca3af;
+}
+
+.btn-submit {
+  padding: 0.9rem 1.8rem;
+  background: linear-gradient(135deg, #298204, #1e6203);
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 600;
+  align-self: flex-start;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 0 4px 15px rgba(41, 130, 4, 0.2);
+}
+
+.btn-submit:hover {
+  background: linear-gradient(135deg, #1e6203, #298204);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(41, 130, 4, 0.3);
+}
+
+.btn-icon {
+  font-size: 0.9rem;
+}
+
+/* Footer Bottom */
+.footer-bottom {
+  text-align: center;
+  padding: 1.5rem 0;
+  border-top: 1px solid #2b3a4f;
+  font-size: 0.9rem;
+  color: #9ca3af;
+  background-color: rgba(10, 21, 37, 0.8);
+}
+
+.footer-links {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+  gap: 1.5rem;
+}
+
+.footer-links a {
+  color: #d1d5db;
+  text-decoration: none;
+  font-size: 0.85rem;
+  transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+  color: #298204;
+}
+
+/* نموذج الاتصال - رسالة النجاح */
+.form-success {
+  text-align: center;
+  padding: 2rem;
+  background-color: rgba(41, 130, 4, 0.05);
+  border-radius: 8px;
+  margin-top: 1rem;
+}
+
+.success-icon {
+  color: #298204;
+  margin-bottom: 1.5rem;
+}
+
+.form-success h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.form-success p {
+  margin-bottom: 2rem;
+  color: #666;
+}
+
+/* نموذج الاتصال - رسالة الخطأ */
+.form-error {
+  text-align: center;
+  padding: 2rem;
+  background-color: rgba(220, 53, 69, 0.05);
+  border-radius: 8px;
+  margin-top: 1rem;
+}
+
+.error-icon {
+  color: #dc3545;
+  margin-bottom: 1.5rem;
+}
+
+.form-error h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.form-error p {
+  margin-bottom: 1rem;
+  color: #666;
+}
+
+.form-error strong {
+  color: #dc3545;
+}
+
+/* تنسيق حالة التحميل */
+.btn-submit:disabled {
+  opacity: 0.8;
+  cursor: default;
+}
+
+.fa-spin {
+  animation: fa-spin 1s linear infinite;
+}
+
+@keyframes fa-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* تحسين مظهر الحقول */
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: #298204;
+  box-shadow: 0 0 0 3px rgba(41, 130, 4, 0.1);
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: #aaa;
+  font-size: 0.9rem;
+}
+
+/* تحسين تصميم متجاوب */
+/* Responsive CSS - Improved */
+@media (max-width: 1200px) {
+  .footer-content {
+    max-width: 95%;
+    gap: 3rem;
+  }
+}
+
+@media (max-width: 992px) {
+  .footer-content {
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem;
+  }
+
+  .footer-form form {
+    padding: 1.8rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .footer-content {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    padding: 2rem 1.5rem;
+  }
+
+  .footer-wave svg {
+    height: 70px;
+  }
+
+  .footer-form form {
+    padding: 1.5rem;
+  }
+
+  .contact-title,
+  .form-title {
+    font-size: 1.2rem;
+  }
+
+  .logo-icon {
+    font-size: 1.8rem;
+  }
+
+  .footer-logo h3 {
+    font-size: 1.6rem;
+  }
+
+  .social-links {
+    justify-content: flex-start;
+  }
+
+  .footer-form .btn-submit {
+    align-self: center;
+    width: 100%;
+  }
+
+  .footer-links {
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer-content {
+    padding: 2rem 1rem;
+  }
+
+  .footer-wave svg {
+    height: 50px;
+  }
+
+  .footer-form form {
+    padding: 1.2rem;
+  }
+
+  .contact-title:after,
+  .form-title:after {
+    width: 80%;
+  }
+
+  .btn-submit {
+    padding: 0.8rem 1.5rem;
+    font-size: 0.9rem;
+  }
+
+  .footer-bottom {
+    padding: 1.2rem 0;
+  }
+
+  .footer-links {
+    gap: 0.6rem;
+  }
+
+  .footer-links a {
+    font-size: 0.8rem;
+  }
+}
+
+/* تحسين لدعم الشاشات الصغيرة جدا */
+@media (max-width: 360px) {
+  .contact-item p {
+    font-size: 0.85rem;
+  }
+
+  .social-links {
+    flex-wrap: wrap;
+  }
+
+  .social-link {
+    width: 34px;
+    height: 34px;
+  }
+
+  .footer-logo h3 {
+    font-size: 1.4rem;
+  }
+
+  .footer-form input,
+  .footer-form textarea {
+    padding: 0.8rem;
+    font-size: 0.9rem;
+  }
+}

@@ -13,3 +13,97 @@ body {
     color-scheme: dark;
   }
 }
+
+/* app.css - Global Styles */
+
+/* Reset default browser styles (basic reset) */
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ul,
+ol,
+li,
+figure,
+figcaption,
+blockquote,
+dl,
+dd {
+  margin: 0;
+  padding: 0;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+body {
+  font-family: "Poppins", sans-serif; /* تطبيق الخط الافتراضي */
+  line-height: 1.6;
+  color: #333; /* لون نص افتراضي */
+  background-color: #fff; /* لون خلفية افتراضي */
+}
+
+a {
+  text-decoration: none;
+  color: inherit; /* الروابط ترث اللون */
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* Basic Button Styling (can be overridden by components) */
+.btn {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  font-weight: 500;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  border: 1px solid transparent;
+  font-size: 1rem;
+  border-radius: 0.25rem; /* Rounded corners slightly */
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+    border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  text-transform: uppercase;
+}
+
+/* Example Primary Button Color (matching GoSolar theme) */
+.btn-primary {
+  color: #fff;
+  background-color: #298204; /* เปลี่ยนเป็นสีเขียว */
+  border-color: #298204;
+}
+
+.btn-primary:hover {
+  background-color: #1f6003; /* Darker green on hover */
+  border-color: #1a5302;
+}
+
+/* Example Secondary Button Color */
+.btn-secondary {
+  color: #fff;
+  background-color: #004a99; /* لون أزرق داكن مشابه */
+  border-color: #004a99;
+}
+
+.btn-secondary:hover {
+  background-color: #003a75;
+  border-color: #003366;
+}
+
+/* Utility Class for Containers (optional) */
+.container {
+  max-width: 1140px; /* عرض قياسي للحاوية */
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+}

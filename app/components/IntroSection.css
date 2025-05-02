@@ -1,0 +1,112 @@
+.intro-section {
+  padding: 4rem 2rem;
+  background-color: #fff; /* White background for this section */
+}
+
+.intro-text {
+  text-align: center;
+  margin-bottom: 4rem; /* Increased spacing */
+  max-width: 800px; /* Limit width */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.intro-text h2 {
+  font-size: 2.2rem; /* Adjusted size */
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #343a40;
+}
+
+.intro-text h3 {
+  font-size: 1.6rem; /* Adjusted size */
+  color: #495057; /* Slightly lighter */
+  margin-bottom: 1.5rem;
+  font-weight: 500;
+}
+
+.intro-text p {
+  max-width: 700px;
+  margin: 0 auto;
+  color: #495057;
+  font-size: 1.05rem; /* Slightly larger */
+}
+
+.action-cards-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  max-width: 1140px; /* Align with container */
+  margin: 0 auto;
+}
+
+.action-card {
+  background-color: #f8f9fa;
+  /* padding: 2.5rem 2rem; */ /* Remove padding, handled by content */
+  padding: 0; /* Reset padding */
+  text-align: center;
+  border-radius: 0.25rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  overflow: hidden; /* Keep image corners rounded */
+  display: flex; /* Use flex for layout if needed */
+  flex-direction: column;
+}
+
+.action-card-image {
+  width: 100%;
+  height: 200px; /* Fixed height */
+  object-fit: cover;
+  display: block;
+}
+
+.action-card-content {
+  padding: 2rem 1.5rem; /* Padding for the text content */
+  flex-grow: 1; /* Allow content to grow */
+  display: flex;
+  flex-direction: column;
+}
+
+.action-card h4 {
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #004a99;
+}
+
+.action-card p {
+  font-size: 1rem;
+  color: #495057;
+  margin-bottom: 1.5rem; /* Adjusted spacing */
+  line-height: 1.7;
+  flex-grow: 1; /* Allow paragraph to take space */
+}
+
+.action-card .read-more {
+  text-decoration: none;
+  color: #298204;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  margin-top: auto; /* Push to bottom */
+}
+
+.action-card .read-more:hover {
+  text-decoration: underline;
+}
+
+/* --- Responsive Intro Section --- */
+@media (max-width: 768px) {
+  .action-cards-container {
+    grid-template-columns: 1fr; /* Stack cards */
+    gap: 1.5rem;
+  }
+  .intro-section {
+    padding: 3rem 1rem;
+  }
+  .intro-text h2 {
+    font-size: 1.8rem;
+  }
+  .intro-text h3 {
+    font-size: 1.3rem;
+  }
+}
