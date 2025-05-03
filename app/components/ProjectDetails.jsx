@@ -53,9 +53,9 @@ const ProjectDetails = ({ project, onClose, allProjects }) => {
 
   // Create a style object for the background image
   const imageStyle = {
-    backgroundImage: imageError
-      ? `url("${imgMainFallback}")`
-      : `url("${alternateUrl || mainImage}")`,
+    backgroundImage: !imageError
+      ? `url("${alternateUrl || mainImage}")`
+      : "none",
     backgroundSize: "cover",
     backgroundPosition: "center",
     height: "100%",
@@ -211,14 +211,37 @@ const ProjectDetails = ({ project, onClose, allProjects }) => {
         <div className="project-details-content">
           <div className="project-details-gallery">
             {imageError ? (
-              // استخدام عنصر img كبديل عندما يفشل استخدام background-image
-              <img
-                src={mainImage}
-                alt={project.name || "Solar Station"}
-                style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                onError={handleImageError}
-                className="project-details-main-image"
-              />
+              // عرض رسالة خطأ بدلاً من الصورة البديلة
+              <div
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  backgroundColor: "#f8f8f8",
+                  color: "#d32f2f",
+                  padding: "20px",
+                  textAlign: "center",
+                }}
+              >
+                <span style={{ fontSize: "32px", marginBottom: "15px" }}>
+                  ⚠️
+                </span>
+                <p
+                  style={{
+                    margin: "0",
+                    fontWeight: "bold",
+                    fontSize: "1.2rem",
+                  }}
+                >
+                  خطأ في تحميل الصورة
+                </p>
+                <p style={{ margin: "10px 0 0", fontSize: "1rem" }}>
+                  يرجى التحقق من اتصال الإنترنت
+                </p>
+              </div>
             ) : (
               <div
                 style={imageStyle}

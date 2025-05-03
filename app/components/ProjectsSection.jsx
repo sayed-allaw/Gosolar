@@ -67,9 +67,9 @@ const ProjectCard = ({ project, onViewProject, style }) => {
   const cardRef = React.useRef(null);
 
   // Get the image URL, preferring image over imageSrc, falling back to a random fallback
-  const initialImageUrl =
-    createDirectImageUrl(project.image || project.imageSrc) ||
-    fallbackImages[Math.floor(Math.random() * fallbackImages.length)];
+  const initialImageUrl = createDirectImageUrl(
+    project.image || project.imageSrc
+  );
 
   // استخدام الرابط البديل إذا كان متاحًا
   const imageUrl = alternateUrl || initialImageUrl;
@@ -201,12 +201,29 @@ const ProjectCard = ({ project, onViewProject, style }) => {
             <div className="placeholder-pulse"></div>
           </div>
         ) : imageError ? (
-          // استخدام الصورة البديلة الافتراضية (main.png) عند فشل التحميل
-          <img
-            src={DEFAULT_FALLBACK_IMAGE}
-            alt={project.name || "Solar Station"}
-            style={{ width: "100%", height: "100%", objectFit: "cover" }}
-          />
+          // عرض رسالة خطأ بدلاً من الصورة البديلة
+          <div
+            style={{
+              width: "100%",
+              height: "100%",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              backgroundColor: "#f8f8f8",
+              color: "#d32f2f",
+              padding: "10px",
+              textAlign: "center",
+            }}
+          >
+            <span style={{ fontSize: "24px", marginBottom: "10px" }}>⚠️</span>
+            <p style={{ margin: "0", fontWeight: "bold" }}>
+              خطأ في تحميل الصورة
+            </p>
+            <p style={{ margin: "5px 0 0", fontSize: "0.8rem" }}>
+              يرجى التحقق من اتصال الإنترنت
+            </p>
+          </div>
         ) : (
           <div
             style={imageStyle}
@@ -255,6 +272,15 @@ const ProjectsSection = () => {
       try {
         setLoading(true);
 
+        // التحقق من الاتصال بالإنترنت
+        if (!navigator.onLine) {
+          setError(
+            "No internet connection. Please check your connection and try again."
+          );
+          setLoading(false);
+          return;
+        }
+
         // Try to import Firebase if it exists
         try {
           const { db } = await import("../firebase/firebaseConfig");
@@ -281,27 +307,47 @@ const ProjectsSection = () => {
           if (projectsData.length > 0) {
             setProjects(projectsData);
           } else {
-            console.log(
-              "No newstations found in Firestore, using fallback data"
-            );
-            setProjects(getStaticProjects());
+            setError("No projects found. Please try again later.");
           }
         } catch (firebaseErr) {
           console.error("Error with Firebase:", firebaseErr);
-          console.log("Using fallback data due to Firebase error");
-          setProjects(getStaticProjects());
+          setError(
+            "Could not connect to the database. Please check your internet connection and try again."
+          );
         }
 
         setLoading(false);
       } catch (err) {
         console.error("Error fetching newstations:", err);
-        setError("Failed to load solar stations. Please try again later.");
+        setError(
+          "Failed to load projects. Please check your internet connection and try again."
+        );
         setLoading(false);
-        setProjects(getStaticProjects());
       }
     };
 
+    // إضافة مستمع للتغيرات في حالة الاتصال بالإنترنت
+    const handleOnlineStatusChange = () => {
+      if (!navigator.onLine) {
+        setError(
+          "Internet connection lost. Please check your connection and try again."
+        );
+      } else {
+        // إذا عاد الاتصال، حاول إعادة تحميل المشاريع
+        fetchProjects();
+      }
+    };
+
+    window.addEventListener("online", handleOnlineStatusChange);
+    window.addEventListener("offline", handleOnlineStatusChange);
+
     fetchProjects();
+
+    // تنظيف المستمعين عند تفكيك المكون
+    return () => {
+      window.removeEventListener("online", handleOnlineStatusChange);
+      window.removeEventListener("offline", handleOnlineStatusChange);
+    };
   }, []);
 
   // Update document title
@@ -321,7 +367,6 @@ const ProjectsSection = () => {
           "Grid-connected solar system installation for a large food factory, saving 40% of annual energy consumption.",
         cables: "Premium quality cables",
         Inverter: "High-efficiency inverter",
-        image: fallbackImages[0],
       },
       {
         id: "2",
@@ -332,7 +377,6 @@ const ProjectsSection = () => {
           "Solar-diesel hybrid solution for a poultry farm, reducing energy costs by 60%.",
         cables: "Weather-resistant cables",
         Inverter: "Hybrid inverter system",
-        image: fallbackImages[1],
       },
       {
         id: "3",
@@ -343,7 +387,6 @@ const ProjectsSection = () => {
           "Integrated solar system for a private hospital with battery storage for emergency backup.",
         cables: "Medical-grade cables",
         Inverter: "Backup-enabled inverter",
-        image: fallbackImages[2],
       },
       {
         id: "4",
@@ -354,7 +397,6 @@ const ProjectsSection = () => {
           "Equipping an entire residential compound with rooftop solar systems to power common areas.",
         cables: "Residential-grade cables",
         Inverter: "Multi-unit inverter system",
-        image: fallbackImages[3],
       },
       {
         id: "5",
@@ -365,7 +407,6 @@ const ProjectsSection = () => {
           "Grid-connected solar system with energy efficiency solutions for a large shopping mall.",
         cables: "Commercial-grade cables",
         Inverter: "High-capacity inverter",
-        image: fallbackImages[4],
       },
       {
         id: "6",
@@ -376,7 +417,6 @@ const ProjectsSection = () => {
           "Comprehensive solar solution for a textile factory with advanced energy management technologies.",
         cables: "Industrial-grade cables",
         Inverter: "Smart grid inverter",
-        image: fallbackImages[5],
       },
     ];
   };
@@ -476,8 +516,209 @@ const ProjectsSection = () => {
           <p>Loading solar stations...</p>
         </div>
       ) : error ? (
-        <div className="error-container">
-          <p className="error-message">{error}</p>
+        <div
+          className="error-container"
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: "70px 40px",
+            background: "linear-gradient(145deg, #ffffff, #f5f7fa)",
+            borderRadius: "16px",
+            textAlign: "center",
+            margin: "60px auto",
+            maxWidth: "720px",
+            boxShadow: "rgba(17, 12, 46, 0.08) 0px 48px 100px 0px",
+            color: "#1a202c",
+            position: "relative",
+            overflow: "hidden",
+          }}
+        >
+          {/* Background decorative elements */}
+          <div
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              width: "100%",
+              height: "8px",
+              background: "linear-gradient(90deg, #4caf50, #8bc34a, #2e7d32)",
+              zIndex: 1,
+            }}
+          ></div>
+          <div
+            style={{
+              position: "absolute",
+              top: "40px",
+              right: "40px",
+              width: "120px",
+              height: "120px",
+              borderRadius: "50%",
+              background:
+                "radial-gradient(circle, rgba(229,239,255,0.7) 0%, rgba(249,250,252,0) 70%)",
+              zIndex: 0,
+            }}
+          ></div>
+          <div
+            style={{
+              position: "absolute",
+              bottom: "30px",
+              left: "30px",
+              width: "180px",
+              height: "180px",
+              borderRadius: "50%",
+              background:
+                "radial-gradient(circle, rgba(229,239,255,0.6) 0%, rgba(249,250,252,0) 65%)",
+              zIndex: 0,
+            }}
+          ></div>
+
+          {/* Error icon */}
+          <div
+            style={{
+              marginBottom: "35px",
+              position: "relative",
+              zIndex: 2,
+            }}
+          >
+            <div
+              style={{
+                width: "110px",
+                height: "110px",
+                borderRadius: "50%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                background: "rgba(239, 255, 244, 0.8)",
+                boxShadow: "rgba(76, 175, 80, 0.15) 0px 8px 24px",
+              }}
+            >
+              <svg
+                width="55"
+                height="55"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M12 21C16.9706 21 21 16.9706 21 12C21 7.02944 16.9706 3 12 3C7.02944 3 3 7.02944 3 12C3 16.9706 7.02944 21 12 21Z"
+                  stroke="#4caf50"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <path
+                  d="M12 8V13"
+                  stroke="#4caf50"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <circle cx="12" cy="16" r="1.25" fill="#4caf50" />
+                <path
+                  opacity="0.2"
+                  d="M12 21C16.9706 21 21 16.9706 21 12C21 7.02944 16.9706 3 12 3C7.02944 3 3 7.02944 3 12C3 16.9706 7.02944 21 12 21Z"
+                  fill="#4caf50"
+                />
+              </svg>
+            </div>
+          </div>
+
+          {/* Error messages */}
+          <h2
+            style={{
+              margin: "0 0 18px 0",
+              color: "#1a202c",
+              fontSize: "2.2rem",
+              fontWeight: "700",
+              letterSpacing: "-0.03em",
+              fontFamily:
+                "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', sans-serif",
+              position: "relative",
+              zIndex: 2,
+            }}
+          >
+            Connection Error
+          </h2>
+
+          <p
+            className="error-message"
+            style={{
+              fontSize: "1.25rem",
+              margin: "0 0 35px 0",
+              lineHeight: "1.6",
+              color: "#4a5568",
+              maxWidth: "540px",
+              fontFamily:
+                "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', sans-serif",
+              position: "relative",
+              zIndex: 2,
+            }}
+          >
+            {error}
+          </p>
+
+          {/* Action button */}
+          <button
+            onClick={() => window.location.reload()}
+            style={{
+              backgroundColor: "#4caf50",
+              color: "white",
+              border: "none",
+              padding: "16px 36px",
+              borderRadius: "50px",
+              cursor: "pointer",
+              fontSize: "1.1rem",
+              fontWeight: "600",
+              transition: "all 0.25s ease",
+              boxShadow: "rgba(76, 175, 80, 0.35) 0px 10px 30px -10px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              position: "relative",
+              zIndex: 2,
+              fontFamily:
+                "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', sans-serif",
+            }}
+            onMouseOver={(e) => {
+              e.currentTarget.style.transform = "translateY(-3px)";
+              e.currentTarget.style.boxShadow =
+                "rgba(76, 175, 80, 0.5) 0px 20px 30px -10px";
+              e.currentTarget.style.backgroundColor = "#43a047";
+            }}
+            onMouseOut={(e) => {
+              e.currentTarget.style.transform = "translateY(0)";
+              e.currentTarget.style.boxShadow =
+                "rgba(76, 175, 80, 0.35) 0px 10px 30px -10px";
+              e.currentTarget.style.backgroundColor = "#4caf50";
+            }}
+          >
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              style={{ marginRight: "8px" }}
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M1 4V10H7"
+                stroke="white"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+              <path
+                d="M3.51 15C4.15839 16.8404 5.38734 18.4202 7.01166 19.5014C8.63598 20.5826 10.5677 21.1066 12.5157 20.9945C14.4637 20.8824 16.3226 20.1402 17.8121 18.8798C19.3017 17.6193 20.3413 15.909 20.7742 14.0064C21.2072 12.1037 21.0101 10.1119 20.2126 8.33111C19.4152 6.55033 18.0605 5.0768 16.3528 4.13277C14.6451 3.18874 12.6769 2.82527 10.7447 3.09712C8.81245 3.36897 7.02091 4.26142 5.64 5.64L1 10"
+                stroke="white"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+            Try Again
+          </button>
         </div>
       ) : (
         <>
