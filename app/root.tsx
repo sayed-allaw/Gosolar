@@ -39,6 +39,8 @@ export const links: Route.LinksFunction = () => [
 export function Layout({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     initEmailJS();
+    // Set default title
+    document.title = "GoSolar - Renewable Energy Solutions";
   }, []);
 
   return (
@@ -46,6 +48,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>GoSolar - Renewable Energy Solutions</title>
         <Meta />
         <Links />
       </head>

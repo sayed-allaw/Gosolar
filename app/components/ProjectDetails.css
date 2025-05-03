@@ -10,6 +10,7 @@
   align-items: center;
   z-index: 9999;
   padding: 20px;
+  animation: fadeIn 0.3s ease;
 }
 
 .project-details-container {
@@ -21,13 +22,23 @@
   max-width: 1200px;
   max-height: 85vh;
   overflow: hidden;
-  animation: fadeIn 0.3s ease;
+  animation: slideUpFade 0.5s ease;
+  border-top: 4px solid #298204;
 }
 
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUpFade {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
   }
   to {
     opacity: 1;
@@ -52,10 +63,12 @@
   cursor: pointer;
   z-index: 20;
   transition: all 0.2s ease;
+  animation: fadeIn 0.5s ease 0.3s both;
 }
 
 .close-btn:hover {
   background: #e74c3c;
+  transform: rotate(90deg);
 }
 
 /* Navigation buttons */
@@ -75,7 +88,8 @@
   justify-content: center;
   cursor: pointer;
   z-index: 20;
-  transition: all 0.2s ease;
+  transition: all 0.3s ease;
+  animation: fadeIn 0.5s ease 0.3s both;
 }
 
 .prev-btn {
@@ -87,7 +101,8 @@
 }
 
 .nav-btn:hover {
-  background: rgba(0, 0, 0, 0.8);
+  background: #298204;
+  transform: translateY(-50%) scale(1.1);
 }
 
 .project-details-content {
@@ -101,14 +116,15 @@
   height: 350px;
   overflow: hidden;
   position: relative;
-  background-color: #000;
+  background-color: #f1f1f1;
+  animation: fadeIn 0.6s ease;
 }
 
 .project-details-main-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.3s ease;
+  transition: transform 0.8s ease;
 }
 
 /* Style for div element used as background image */
@@ -117,35 +133,59 @@ div.project-details-main-image {
   height: 100%;
   background-position: center;
   background-size: cover;
-  transition: transform 0.3s ease;
+  transition: transform 0.8s ease;
+  animation: slowZoom 15s infinite alternate ease-in-out;
+}
+
+@keyframes slowZoom {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.05);
+  }
 }
 
 .project-category-badge {
   position: absolute;
   top: 15px;
   left: 15px;
-  background: #3498db;
+  background: #298204;
   color: white;
   padding: 6px 14px;
   border-radius: 20px;
   font-weight: 500;
   font-size: 13px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  animation: fadeInRight 0.5s ease 0.4s both;
+}
+
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 .project-details-info {
   padding: 25px;
   background-color: white;
   overflow-y: auto;
+  animation: fadeIn 0.8s ease 0.2s both;
 }
 
 .project-details-info h2 {
-  color: #2c3e50;
+  color: #298204;
   font-size: 1.8rem;
   margin-bottom: 20px;
   padding-bottom: 10px;
-  border-bottom: 2px solid #3498db;
+  border-bottom: 2px solid #298204;
   font-weight: 600;
+  animation: fadeInUp 0.6s ease 0.3s both;
 }
 
 .project-info-grid {
@@ -157,6 +197,8 @@ div.project-details-main-image {
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  border-left: 3px solid #298204;
+  animation: fadeInUp 0.6s ease 0.4s both;
 }
 
 .info-item {
@@ -166,7 +208,7 @@ div.project-details-main-image {
 
 .info-label {
   font-weight: 600;
-  color: #7f8c8d;
+  color: #555;
   margin-bottom: 5px;
   font-size: 0.9rem;
 }
@@ -183,7 +225,7 @@ div.project-details-main-image {
 
 .project-description-full h3 {
   font-size: 1.4rem;
-  color: #2c3e50;
+  color: #298204;
   margin-bottom: 15px;
   font-weight: 600;
   position: relative;
@@ -197,26 +239,25 @@ div.project-details-main-image {
   left: 0;
   width: 100%;
   height: 2px;
-  background: #3498db;
+  background: #298204;
 }
 
 .project-description-full p {
-  color: #34495e;
-  margin-bottom: 15px;
-  line-height: 1.6;
+  color: #555;
+  line-height: 1.7;
+  font-size: 1.05rem;
 }
 
 .project-navigation-small {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px 0;
+  padding-top: 20px;
   border-top: 1px solid #eee;
-  margin-top: 20px;
 }
 
 .project-navigation-small span {
-  color: #7f8c8d;
+  color: #777;
   font-size: 0.9rem;
 }
 
@@ -226,18 +267,18 @@ div.project-details-main-image {
 }
 
 .small-nav-buttons button {
-  background-color: #3498db;
+  background-color: #298204;
   color: white;
   border: none;
   padding: 8px 15px;
-  border-radius: 5px;
+  border-radius: 4px;
+  font-size: 0.9rem;
   cursor: pointer;
-  font-weight: 500;
   transition: all 0.2s ease;
 }
 
 .small-nav-buttons button:hover {
-  background-color: #2980b9;
+  background-color: #1e6503;
 }
 
 @media (min-width: 992px) {

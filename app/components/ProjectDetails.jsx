@@ -1,5 +1,6 @@
 import React from "react";
 import "./ProjectDetails.css";
+import imgMainFallback from "../assets/main.png"; // استيراد صورة main.png البديلة
 
 // Helper function to check if a URL is from Google Drive
 const isGoogleDriveUrl = (url) => {
@@ -10,37 +11,137 @@ const isGoogleDriveUrl = (url) => {
 const createDirectImageUrl = (url) => {
   if (!url) return null;
 
+  // Decode the URL first to handle encoded characters like &amp;
+  const decodedUrl = decodeURIComponent(url.replace(/&amp;/g, "&"));
+
   // For Google Drive URLs, create a sanitized URL
-  if (isGoogleDriveUrl(url)) {
+  if (isGoogleDriveUrl(decodedUrl)) {
     try {
       // Extract the file ID
-      const fileIdMatch = url.match(/id=([^&]+)/);
+      const fileIdMatch = decodedUrl.match(/id=([^&]+)/);
       if (fileIdMatch && fileIdMatch[1]) {
-        // Return the direct URL
-        return `https://drive.google.com/uc?export=view&id=${fileIdMatch[1]}`;
+        const fileId = fileIdMatch[1];
+
+        // العديد من الأشكال البديلة لنفس الرابط في حالة فشل أحدها
+        return `https://drive.google.com/uc?export=view&id=${fileId}`;
+
+        // يمكن تجربة هذه الروابط البديلة إذا استمرت المشكلة:
+        // return `https://drive.google.com/thumbnail?id=${fileId}&sz=w1000`;
+        // return `https://lh3.googleusercontent.com/d/${fileId}`;
       }
     } catch (error) {
       console.error("Error creating direct image URL:", error);
     }
   }
 
-  // Return the original URL for non-Google Drive URLs
-  return url;
+  // Return the decoded URL for non-Google Drive URLs
+  return decodedUrl;
 };
 
 const ProjectDetails = ({ project, onClose, allProjects }) => {
+  const [imageLoaded, setImageLoaded] = React.useState(false);
+  const [imageError, setImageError] = React.useState(false);
+  const [alternateUrl, setAlternateUrl] = React.useState(null);
+
   if (!project) return null;
 
   // Get the main image source
   const mainImage = createDirectImageUrl(project.image || project.imageSrc);
 
+  // إضافة لوج للتأكد من الرابط الذي يتم استخدامه
+  console.log("Project image URL:", mainImage);
+
   // Create a style object for the background image
   const imageStyle = {
-    backgroundImage: `url("${mainImage}")`,
+    backgroundImage: imageError
+      ? `url("${imgMainFallback}")`
+      : `url("${alternateUrl || mainImage}")`,
     backgroundSize: "cover",
     backgroundPosition: "center",
     height: "100%",
     width: "100%",
+  };
+
+  // استخدام React.useEffect لمراقبة تحميل الصورة ومحاولة استخدام URL بديل في حالة الفشل
+  React.useEffect(() => {
+    if (mainImage) {
+      const img = new Image();
+      img.onload = () => {
+        console.log("Image loaded successfully:", mainImage);
+        setImageLoaded(true);
+      };
+      img.onerror = (e) => {
+        console.error("Error loading image:", e, mainImage);
+        // محاولة استخدام رابط بديل
+        if (isGoogleDriveUrl(mainImage)) {
+          try {
+            const fileIdMatch = mainImage.match(/id=([^&]+)/);
+            if (fileIdMatch && fileIdMatch[1]) {
+              const fileId = fileIdMatch[1];
+              // تجربة شكل رابط بديل
+              const newUrl = `https://drive.google.com/thumbnail?id=${fileId}&sz=w1000`;
+              console.log("Trying alternate URL:", newUrl);
+              setAlternateUrl(newUrl);
+              return;
+            }
+          } catch (error) {
+            console.error("Error creating alternate image URL:", error);
+          }
+        }
+        setImageError(true);
+      };
+      img.src = mainImage;
+    }
+  }, [mainImage]);
+
+  // محاولة ثانية مع الرابط البديل إذا تم تعيينه
+  React.useEffect(() => {
+    if (alternateUrl) {
+      const img = new Image();
+      img.onload = () => {
+        console.log("Alternate image loaded successfully:", alternateUrl);
+        setImageLoaded(true);
+      };
+      img.onerror = () => {
+        console.error("Error loading alternate image:", alternateUrl);
+        // تجربة شكل رابط آخر
+        if (isGoogleDriveUrl(mainImage)) {
+          try {
+            const fileIdMatch = mainImage.match(/id=([^&]+)/);
+            if (fileIdMatch && fileIdMatch[1]) {
+              const fileId = fileIdMatch[1];
+              const thirdUrl = `https://lh3.googleusercontent.com/d/${fileId}`;
+              console.log("Trying third URL format:", thirdUrl);
+
+              // محاولة ثالثة للتحميل
+              const thirdImg = new Image();
+              thirdImg.onload = () => {
+                console.log("Third URL format loaded successfully:", thirdUrl);
+                setAlternateUrl(thirdUrl);
+                setImageLoaded(true);
+              };
+              thirdImg.onerror = () => {
+                console.error(
+                  "All URL formats failed, using main.png fallback"
+                );
+                setImageError(true);
+              };
+              thirdImg.src = thirdUrl;
+              return;
+            }
+          } catch (error) {
+            console.error("Error creating third image URL:", error);
+          }
+        }
+        setImageError(true);
+      };
+      img.src = alternateUrl;
+    }
+  }, [alternateUrl, mainImage]);
+
+  const handleImageError = () => {
+    console.log(`Fallback to direct img for ${project.name}`);
+    setImageError(true);
   };
 
   // Get completion year from Firestore or default to 2023
@@ -91,7 +192,7 @@ const ProjectDetails = ({ project, onClose, allProjects }) => {
           <button
             className="nav-btn prev-btn"
             onClick={handlePreviousProject}
-            aria-label="Previous station"
+            aria-label="Previous Project"
           >
             &#10094;
           </button>
@@ -101,7 +202,7 @@ const ProjectDetails = ({ project, onClose, allProjects }) => {
           <button
             className="nav-btn next-btn"
             onClick={handleNextProject}
-            aria-label="Next station"
+            aria-label="Next Project"
           >
             &#10095;
           </button>
@@ -109,12 +210,23 @@ const ProjectDetails = ({ project, onClose, allProjects }) => {
 
         <div className="project-details-content">
           <div className="project-details-gallery">
-            <div
-              style={imageStyle}
-              role="img"
-              aria-label={project.name || "Solar Station"}
-              className="project-details-main-image"
-            ></div>
+            {imageError ? (
+              // استخدام عنصر img كبديل عندما يفشل استخدام background-image
+              <img
+                src={mainImage}
+                alt={project.name || "Solar Station"}
+                style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                onError={handleImageError}
+                className="project-details-main-image"
+              />
+            ) : (
+              <div
+                style={imageStyle}
+                role="img"
+                aria-label={project.name || "Solar Station"}
+                className="project-details-main-image"
+              ></div>
+            )}
             {project.category && (
               <div className="project-category-badge">{project.category}</div>
             )}
