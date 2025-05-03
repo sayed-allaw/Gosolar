@@ -314,19 +314,28 @@ const Footer = () => {
 
       <div className="footer-bottom">
         <p>
-          &copy; {new Date().getFullYear()} Gosolar Energy Solutions. All Rights
+          &copy; {new Date().getFullYear()} Gosolar  . All Rights
           Reserved.
         </p>
         <div className="footer-links">
-          <a href={facebookPageUrl} target="_blank" rel="noopener noreferrer">
-            Privacy Policy
-          </a>
-          <a href={facebookPageUrl} target="_blank" rel="noopener noreferrer">
-            Terms of Service
-          </a>
-          <a href={facebookPageUrl} target="_blank" rel="noopener noreferrer">
-            Sitemap
-          </a>
+          <p>
+          Designed & Developed by{" "}
+            <a
+              href="https://www.facebook.com/sayed.allaw.54/"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                color: "#4caf50",
+                fontWeight: "bold",
+                textDecoration: "none",
+                transition: "color 0.3s ease",
+              }}
+              onMouseOver={(e) => (e.currentTarget.style.color = "#45a049")}
+              onMouseOut={(e) => (e.currentTarget.style.color = "#4caf50")}
+            >
+              Sayed Allaw
+            </a>
+          </p>
         </div>
       </div>
     </footer>

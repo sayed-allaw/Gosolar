@@ -203,18 +203,17 @@
   display: flex;
   justify-content: center;
   margin-top: 1rem;
-  gap: 1.5rem;
+  text-align: center;
 }
 
-.footer-links a {
-  color: #d1d5db;
-  text-decoration: none;
-  font-size: 0.85rem;
-  transition: color 0.3s ease;
+.footer-links p {
+  color: #9ca3af;
+  font-size: 0.95rem;
+  margin: 0;
 }
 
 .footer-links a:hover {
-  color: #298204;
+  text-decoration: underline;
 }
 
 /* نموذج الاتصال - رسالة النجاح */
