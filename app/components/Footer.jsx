@@ -313,13 +313,10 @@ const Footer = () => {
       </div>
 
       <div className="footer-bottom">
-        <p>
-          &copy; {new Date().getFullYear()} Gosolar  . All Rights
-          Reserved.
-        </p>
+        <p>&copy; {new Date().getFullYear()} Gosolar . All Rights Reserved.</p>
         <div className="footer-links">
           <p>
-          Designed & Developed by{" "}
+            Designed & Developed by{" "}
             <a
               href="https://www.facebook.com/sayed.allaw.54/"
               target="_blank"
