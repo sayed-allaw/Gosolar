@@ -34,13 +34,21 @@ export const links: Route.LinksFunction = () => [
     href: "/favicon.png",
     type: "image/x-icon",
   },
+  {
+    rel: "manifest",
+    href: "/manifest.json",
+  },
+  {
+    rel: "apple-touch-icon",
+    href: "/icons/icon-192x192.png",
+  },
 ];
 
 export function Layout({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     initEmailJS();
     // Set default title
-    document.title = "GoSolar - Renewable Energy Solutions";
+    document.title = "GoSolar";
   }, []);
 
   return (
@@ -48,7 +56,14 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>GoSolar - Renewable Energy Solutions</title>
+        <meta name="robots" content="index, follow" />
+        <meta name="author" content="GoSolar" />
+        <meta name="theme-color" content="#298204" />
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="GoSolar" />
+        <meta property="og:image" content="/images/gosolar-og-image.jpg" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <title>GoSolar</title>
         <Meta />
         <Links />
       </head>

@@ -1,6 +1,41 @@
 import React from "react";
 import { useRouteError } from "react-router-dom";
 import ProjectsSection from "../components/ProjectsSection";
+import type { Route } from "./+types/projects";
+
+export function meta({}: Route.MetaArgs) {
+  return [
+    { title: "GoSolar" },
+    {
+      name: "description",
+      content:
+        "Explore GoSolar's portfolio of successful solar energy projects across Egypt. View our installations for homes, businesses, farms, and industrial facilities with detailed case studies.",
+    },
+    {
+      property: "og:title",
+      content:
+        "Solar Energy Projects by GoSolar | Successful Installations Across Egypt",
+    },
+    {
+      property: "og:description",
+      content:
+        "Browse our gallery of completed solar energy installations. See how businesses and homeowners across Egypt are saving on electricity with our solar solutions.",
+    },
+    {
+      property: "og:url",
+      content: "https://gosolar.eg/projects",
+    },
+    {
+      name: "keywords",
+      content:
+        "solar projects Egypt, solar panel installations, solar energy case studies, completed solar projects, solar success stories, solar panel portfolio, GoSolar projects",
+    },
+    {
+      name: "canonical",
+      content: "https://gosolar.eg/projects",
+    },
+  ];
+}
 
 export function ErrorBoundary() {
   const error = useRouteError();
